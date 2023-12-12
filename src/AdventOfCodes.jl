@@ -1,6 +1,6 @@
 module AdventOfCodes
 
-export day_01, day_02_01, day_03_01, day_03_02, day_04_01
+export day_01, day_02_01, day_03, day_04_01
 
 using UUIDs
 using DataStructures

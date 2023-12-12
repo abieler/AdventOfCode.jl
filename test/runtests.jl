@@ -20,11 +20,11 @@ end
 end
 
 @testset "Day 03" begin
-    @test day_03_01("../data/data-03-01-test.txt") == 4361
-    @test day_03_01("../data/data-03-01.txt") == 531561
+    @test day_03("../data/data-03-01-test.txt", day=1) == 4361
+    @test day_03("../data/data-03-01.txt", day=1) == 531561
 
-    @test day_03_02("../data/data-03-01-test.txt") == 467835
-    @test day_03_02("../data/data-03-01.txt") == 83279367
+    @test day_03("../data/data-03-01-test.txt", day=2) == 467835
+    @test day_03("../data/data-03-01.txt", day=2) == 83279367
 
 end
 

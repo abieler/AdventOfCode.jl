@@ -3,29 +3,26 @@ struct PartNumber
     value::Integer
 end
 
-function day_03_01(filename::String)
+function day_03(filename::String; day = 1)
     char_matrix = text_to_matrix(filename)
     partnr_matrix = Matrix{Union{Missing,PartNumber}}(missing, size(char_matrix))
     keep_only_part_numbers!(char_matrix, partnr_matrix)
-    return sum([pn === missing ? 0 : pn.value for pn in Set(partnr_matrix)])
+
+    day == 1 && return sum([pn === missing ? 0 : pn.value for pn in Set(partnr_matrix)])
+    solvegearratios(char_matrix, partnr_matrix)
 end
 
-function day_03_02(filename::String)
-    char_matrix = text_to_matrix(filename)
+function solvegearratios(char_matrix, partnr_matrix)
     nrows, ncols = size(char_matrix)
-    partnr_matrix = Matrix{Union{Missing,PartNumber}}(missing, size(char_matrix))
-    keep_only_part_numbers!(char_matrix, partnr_matrix)
     result = 0
     for irow = 1:nrows
         for icol = 1:ncols
-            if char_matrix[irow, icol] != '*'
-                continue
-            else
-                roi = regionofinterest(irow, [icol], nrows, ncols)
-                adj_part_numbers = adjacentpartnumbers(partnr_matrix, roi)
-                if length(adj_part_numbers) == 2
-                    result += (adj_part_numbers[1].value * adj_part_numbers[2].value)
-                end
+            char_matrix[irow, icol] != '*' && continue
+
+            roi = regionofinterest(irow, [icol], nrows, ncols)
+            adj_part_numbers = adjacentpartnumbers(partnr_matrix, roi)
+            if length(adj_part_numbers) == 2
+                result += (adj_part_numbers[1].value * adj_part_numbers[2].value)
             end
         end
     end
@@ -44,14 +41,13 @@ function text_to_matrix(filename)
     for (irow, line) in enumerate(lines)
         char_matrix[irow, :] = collect(strip(line))
     end
-    return char_matrix
+    char_matrix
 end
 
 
 function keep_only_part_numbers!(char_matrix, partnr_matrix)
     nrows, ncols = size(char_matrix)
-    irow = 1
-    while irow <= nrows
+    for irow = 1:nrows
         icol = 1
         while icol <= ncols
             if isdigit(char_matrix[irow, icol]) == false
@@ -68,14 +64,10 @@ function keep_only_part_numbers!(char_matrix, partnr_matrix)
                 end
                 icol += length(digit_idxs)
                 continue
-            else
-                char_matrix[irow, digit_idxs] .= '.'
-                icol += length(digit_idxs)
-                continue
             end
-            icol += 1
+            char_matrix[irow, digit_idxs] .= '.'
+            icol += length(digit_idxs)
         end
-        irow += 1
     end
 end
 
@@ -92,12 +84,12 @@ function consecutive_digits(irow, icol, char_matrix)
     for idx = icol+1:size(char_matrix, 2)
         if isdigit(char_matrix[irow, idx])
             push!(idxs, idx)
-        else
-            break
+            continue
         end
+        break
     end
     idxs
 end
 
-issymbol(c::Char) = c != '.' && !isdigit(c) && true
+issymbol(c::Char) = c != '.' && !isdigit(c)
 contains_symbol(char_mask, roi) = sum(issymbol.(char_mask[roi.rows, roi.cols])) > 0
