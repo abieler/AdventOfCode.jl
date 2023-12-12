@@ -1,4 +1,4 @@
-function day_02_01(filename::String)
+function day_02(filename::String)
     lines = readlines(open(filename, "r"))
     bag = (red = 12, green = 13, blue = 14)
     score = 0

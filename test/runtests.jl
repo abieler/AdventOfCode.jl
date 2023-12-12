@@ -10,11 +10,11 @@ using Test
 end
 
 @testset "Day 02" begin
-    score, power = day_02_01("../data/data-02-01-test.txt")
+    score, power = day_02("../data/data-02-01-test.txt")
     @test score == 8
     @test power == 2286
 
-    score, power = day_02_01("../data/data-02.txt")
+    score, power = day_02("../data/data-02.txt")
     @test score == 2528
     @test power == 67363
 end
@@ -29,6 +29,11 @@ end
 end
 
 @testset "Day 04" begin
-    @test day_04_01("../data/data-04-test.txt") == 13
-    @test day_04_01("../data/data-04.txt") == 22488
+    score, nwinningcards = day_04("../data/data-04-test.txt")
+    @test score == 13
+    @test nwinningcards == 30
+
+    score, nwinningcards = day_04("../data/data-04.txt")
+    @test score == 22488
+    @test nwinningcards == 7013204
 end
