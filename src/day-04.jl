@@ -8,7 +8,7 @@ function day_04(filename::String)
         nwins = length(intersect(winning, yours))
         score += nwins > 0 ? (2^(nwins - 1)) : 0
         if nwins > 0
-            for i in (cardnr+1):(cardnr+nwins)
+            for i = (cardnr+1):(cardnr+nwins)
                 winningcards[i] += winningcards[cardnr]
             end
         else

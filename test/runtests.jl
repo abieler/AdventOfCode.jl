@@ -37,3 +37,19 @@ end
     @test score == 22488
     @test nwinningcards == 7013204
 end
+
+@testset "Day 05" begin
+    @test 1 == 1 skip=true
+    @test 2 == 2 skip=true
+end
+
+
+@testset "Day 06" begin
+    @test day_06("../data/data-06-test.txt", day=1) == 288
+    @test day_06("../data/data-06.txt", day=1) == 1155175
+
+    @test day_06("../data/data-06-test.txt", day=2) == 71503
+    @show day_06("../data/data-06.txt", day=2)
+
+end
+
