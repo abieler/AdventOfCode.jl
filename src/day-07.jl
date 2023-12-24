@@ -27,7 +27,7 @@ function orderhand(h; day=1)
     (day == 1 || !contains(h, 'J')) && return oh
 
     nJs = pop!(oh, 'J')
-    if length(oh) == 0
+    if nJs == length(h)
         oh['A'] = length(collect(h)) # if JJJJJ -> AAAAA
         return oh
     end
@@ -39,11 +39,8 @@ end
 function islowerhand(h1, h2)
     # check if one hand is of higher rank than other
     for (p1, p2) in zip(pairs(h1.orderedhand), pairs(h2.orderedhand))
-        if p1.second < p2.second
-            return true
-        elseif p1.second > p2.second
-            return false
-        end
+        p1.second < p2.second && return true
+        p1.second > p2.second && return false
     end
 
     # compare first card value
