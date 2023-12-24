@@ -39,8 +39,8 @@ end
 end
 
 @testset "Day 05" begin
-    @test 1 == 1 skip=true
-    @test 2 == 2 skip=true
+    @test 1 == 1 skip = true
+    @test 2 == 2 skip = true
 end
 
 
@@ -49,7 +49,15 @@ end
     @test day_06("../data/data-06.txt", day=1) == 1155175
 
     @test day_06("../data/data-06-test.txt", day=2) == 71503
-    @show day_06("../data/data-06.txt", day=2)
+    @test day_06("../data/data-06.txt", day=2) == 35961505
 
+end
+
+@testset "Day 07" begin
+    @test day_07("../data/data-07-test.txt", day=1) == 6440
+    @test day_07("../data/data-07.txt", day=1) == 251058093
+
+    @test day_07("../data/data-07-test.txt", day=2) == 5905
+    @test day_07("../data/data-07.txt", day=2) == 249781879
 end
 

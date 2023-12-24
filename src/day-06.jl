@@ -1,4 +1,4 @@
-function day_06(filename::String; day=1)
+function day_06(filename::String; day = 1)
     lines = readlines(open(filename))
     racetime = [parse(Int, m.match) for m in eachmatch(r"\d+", lines[1])]
     records = [parse(Int, m.match) for m in eachmatch(r"\d+", lines[2])]
@@ -9,10 +9,10 @@ function day_06(filename::String; day=1)
 
     result = []
     for (t, r) in zip(racetime, records)
-        N = length(filter(x->x>r, traveldistances(t)))
+        N = length(filter(x -> x > r, traveldistances(t)))
         push!(result, N)
     end
     prod(result)
 end
 
-traveldistances(racetime) =  [t * (racetime-t) for t in 1:racetime-1]
+traveldistances(racetime) = [t * (racetime - t) for t = 1:racetime-1]
