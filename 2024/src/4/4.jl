@@ -1,6 +1,6 @@
 using BenchmarkTools
 
-function getdirections()
+function alldirections()
     return Dict{String,CartesianIndex{2}}(
         "left" => CartesianIndex(-1, 0),
         "right" => CartesianIndex(1, 0),
@@ -13,24 +13,24 @@ function getdirections()
     )
 end
 
-function countxmas(C, directions)
-    N, M = size(C)
+function countxmas(CM, directions)
+    N, M = size(CM)
     cnt = 0
     word = ['X', '.', '.', '.']
     xmas = ['X', 'M', 'A', 'S']
     pos = CartesianIndex(0, 0)
-    for idx in CartesianIndices(C)
-        if C[idx] != 'X'
+    for idx in CartesianIndices(CM)
+        if CM[idx] != 'X'
             continue
         end
-        for (name, ddir) in directions
+        for direction in values(directions)
             word[2:4] .= '.'
             @inbounds for l = 1:3
-                pos = idx + (l * ddir)
+                pos = idx + (l * direction)
                 if (pos[1] > N) || (pos[2] > M) || (pos[1] < 1) || (pos[2] < 1)
                     break
                 else
-                    word[l+1] = C[pos]
+                    word[l+1] = CM[pos]
                 end
             end
             if word == xmas
@@ -43,8 +43,8 @@ end
 
 
 filename = "input.txt"
-charmatrix = filename |> readlines .|> l -> reduce(hcat, l)
-C = vcat(charmatrix...)
-directions = getdirections()
-@benchmark countxmas(C, directions)
+data = filename |> readlines .|> l -> reduce(hcat, l)
+charmatrix = vcat(data...)
+directions = alldirections()
+@benchmark countxmas(charmatrix, directions)
 
