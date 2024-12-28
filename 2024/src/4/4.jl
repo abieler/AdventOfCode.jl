@@ -1,4 +1,5 @@
 using BenchmarkTools
+using StaticArrays
 
 function alldirections()
     return Dict{String,CartesianIndex{2}}(
@@ -16,8 +17,8 @@ end
 function countxmas(CM, directions)
     N, M = size(CM)
     cnt = 0
-    word = ['X', '.', '.', '.']
-    xmas = ['X', 'M', 'A', 'S']
+    word = @MArray ['X', '.', '.', '.']
+    xmas = @SArray ['X', 'M', 'A', 'S']
     pos = CartesianIndex(0, 0)
     for idx in CartesianIndices(CM)
         if CM[idx] != 'X'
