@@ -18,7 +18,7 @@ function countxmas(CM, directions)
     word = MVector{4,Char}('X', '.', '.', '.')
     xmas = SVector{4,Char}('X', 'M', 'A', 'S')
     pos = CartesianIndex(0, 0)
-    for idx in CartesianIndices(CM)
+    @inbounds for idx in CartesianIndices(CM)
         if CM[idx] != 'X'
             continue
         end
@@ -26,11 +26,8 @@ function countxmas(CM, directions)
             word[2:4] .= '.'
             @inbounds for l = 1:3
                 pos = idx + (l * direction)
-                if (pos[1] > N) || (pos[2] > M) || (pos[1] < 1) || (pos[2] < 1)
-                    break
-                else
-                    word[l+1] = CM[pos]
-                end
+                (1 <= pos[1] <= N && 1 <= pos[2] <= M) || break
+                word[l+1] = CM[pos]
             end
             if word == xmas
                 cnt += 1
